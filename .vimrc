@@ -1,68 +1,92 @@
+"--------------------"
+"     Vundle 設定    "
+"--------------------"
+set nocompatible              " required
+filetype off                  " required
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
+" 自定安裝的套件（開始）
+
+
+"---- UI ----"
+Plugin 'xcrooloose/nerdtree'               " 顯示目前目錄結構
+Plugin 'majutsush/tagbar'                  " 顯示目前檔案函式、變數、巨集（取代 Taglist）
+Plugin 'bling/vim-airline'                 " 顯示詳細下方狀態列
+"Plugin 'altercation/vim-colors-solarized'  " 顯示詳細下方狀態列
+"Plugin 'tomasr/molokai'              " 顯示目前游標加亮
+"Plugin 'Yggdroot/indentLine'         " 顯示提示線（直的）
+
+
+"---- Util ----"
+Plugin 'kien/ctrlp.vim'                    " 按下 Ctrl+p 找檔案
+
+
+
+
+
+
+
+" 自定安裝的套件（結束）
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+" see :h vundle for more details or wiki for FAQ
+"--------------------"
+"     套件設定       "
+"--------------------"
+
+"----NerdTree ----"
+map <F2>      :NERDTreeToggle<cr>        "F2 開/關"
+au  VimEnter * NERDTree                  "預設開啟NERDTree"
+let NERDTreeWinPos="right"               "預設窗口在右邊"
+
+
+"----Tagbar----"
+au  VimEnter * Tagbar                    "預設開啟NERDTree"
+nmap <F8>     :TagbarToggle<cr>          "F8 開/關"
+let g:tagbar_left=1                      "預設窗口在左邊"
+let g:tagbar_width=30                    "寬度 30"
+
+
+
+
+"--------------------"
+"     一般設定       "
+"--------------------"
 set ai                  "自動縮排"
 set aw                  "自動存檔"
 set hlsearch            "高亮度反白"
 set backspace=2         "可隨時用倒退鍵刪除"
 set number              "顯示行號"
-set softtabstop=4       "Tab 4"
+set tabstop=4       
 set shiftwidth=4        "Tab 4"     
-set encoding=utf-8 
+set expandtab
+set encoding=utf-8      "UTF8編碼"
 
-"----熱鍵----"
-map      <F4>     :q!<cr>                  "跳前一分頁"
-inoremap jk       <ESC>
-let mapleader="," 
-map <F12> :call Do_CsTag()
-"map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>"
-nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>:copen<CR>
-nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:copen<CR>
-nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-
-"----配色----"
-colorscheme wombat256
+"--------------------"
+"       配色         "
+"--------------------"
+colorscheme Tomorrow-Night
 set t_Co=256
-syntax on
-
-
-
+"syntax on
 
 "--------------------"
-"                    "
-"       外掛         "
-"                    "
+"       熱鍵         "
 "--------------------"
-
-"----Tagbar----"
-"取代Taglist,用來顯示檔案內的變數,方法,屬性,etc...
-nmap <F8>         :TagbarToggle<cr>
-let g:tagbar_left=1
-
-
-"----NerdTree ----"
-au  VimEnter * NERDTree                  "預設開啟NERDTree"
-let NERDTreeWinPos="right"               "預設窗口在右邊"
-map <F2>      :NERDTreeToggle<cr>        "案F2開/關 NERDTreeToggle"
-
-
-"----Taglist的設置 ----"
-map <F3> :silent! Tlist<CR>      "按下F3就可以呼出了
-let Tlist_Ctags_Cmd='ctags'      "因為我們放在環境變量裡，所以可以直接執行
-let Tlist_Use_Right_Window=0     "讓窗口顯示在右邊，0的話就是顯示在左邊
-let Tlist_Show_One_File=0        "讓taglist可以同時展示多個文件的函數列表，如果想只有1個，設置為1
-let Tlist_File_Fold_Auto_Close=1 "非當前文件，函數列表摺疊隱藏
-let Tlist_Exit_OnlyWindow=1      "當taglist是最後一個分割窗口時，自動推出vim
-let Tlist_Process_File_Always=0  "是否一直處理tags.1:處理;0:不處理。不是一直實時更新tags，因為沒有必要
-let Tlist_Inc_Winwidth=0
+map <F12> :call Do_CsTag()　"按下 F12 呼叫 Do_CsTag 方法：map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>"
+imap ;; <Esc>
 
 "--------------------"
-"                    "
 "     自訂方法       "
-"                    "
 "--------------------"
+"此方法會建立 ctag 檔案，用來分析函式、變數等，需要在專案根目錄下執行"
 function Do_CsTag()
     let dir = getcwd()
     if filereadable("tags")
@@ -118,5 +142,3 @@ function Do_CsTag()
         endif
     endif
 endfunction
-
-
