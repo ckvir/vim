@@ -7,7 +7,7 @@
 "  F4  : 關閉分頁
 "  F5  : 上一個分頁
 "  F6  : 下一個分頁
-"  F12 : 在專案跟目錄下建立 Ctags 檔案
+"  F12 : 在專案跟目錄下建立 Ctags 和 Cscope 檔案
 "*************************
 
 
@@ -60,7 +60,7 @@ let NERDTreeWinPos="right"                        " 預設窗口在右邊
 
 
 "---- Tagbar ----"
-nmap <F1>     :TagbarToggle<cr>                   " F1 開/關"
+nmap <F1>     :TagbarToggle<cr>                   " F1 開/關
 au  VimEnter * Tagbar                             " 預設開啟 Tagbar
 au  BufEnter * nested :call tagbar#autoopen(0)    " 開啟新分頁時自動開啟 Tagbar
 let g:tagbar_left=1                               " 預設窗口在左邊
@@ -109,93 +109,31 @@ syntax on                                         " 語法上色
 "*************************
 "          熱鍵         
 "*************************
-"map <F12> :call Do_CsTag()　 "按下 F12 呼叫 Do_CsTag 方法：map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>"
-map <F12> :call Do_Cscope()　"按下 F12 呼叫 Do_CsTag 方法：map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>"
-"map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-imap ;; <Esc>
+map <F12> :call create_cscope_and_ctags()　       " 按下 F12 呼叫 create_cscope_and_ctags()
+imap ;; <Esc>                                     
 ":nohl                                            "（X）消搜尋反白
 
 
 "---- 分頁 ----"
 "<leader> 代表 '\'
-map <leader>tn :tabnew<CR>                        " \tn : 新增一個分頁" 
-map <leader>tc :tabclose<CR>                      " \tc : 關閉一個分頁" 
-map <leader>fp :echo expand('%:p')<CR>            " \fp（fullPath） : 顯示完整路徑" 
-map <F3> :tabnew<CR>                              " F3  : 新增一個分頁" 
-map <F4> :tabclose<CR>                            " F4  : 關閉一個分頁" 
-noremap <F5> gT                                   " F5  : 上一個分頁" 
-noremap <F6> gt                                   " F6  : 下一個分頁" 
+map <leader>fp :echo expand('%:p')<CR>            " \fp（fullPath） : 顯示完整路徑
+map <F3> :tabnew<CR>                              " F3  : 新增一個分頁
+map <F4> :tabclose<CR>                            " F4  : 關閉一個分頁
+noremap <F5> gT                                   " F5  : 上一個分頁
+noremap <F6> gt                                   " F6  : 下一個分頁
 
 "*************************
 "        自訂方法       
 "*************************
-"此方法會建立 ctag 檔案，用來分析函式、變數等，需要在專案根目錄下執行"
-function Do_Cscope()
+"此方法會建立 ctag 和 cscope 檔案，用來分析函式、變數等，在專案根目錄下執行"
+function create_cscope_and_ctags()
         echohl WarningMsg | echom 'Execute Create Database!' | echohl None
         call inputsave()
         let buildnow = input('Would you want to build an new DB?(y/N)')
         if toupper(buildnow) == 'Y'
-            silent !echo 'Execute Cscope and Ctags now,Please...'
+            silent !echo 'Execute Cscope and Ctags now,Please Wait...'
             silent !find ./ -name '*.aidl' -o -name '*.cc' -o -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.java' -o -name '*.py' > 'cscope.files'
             silent !cscope -Rbq -i 'cscope.files'
-            silent !ctags -R --exclude=.svn --exclude=.git --c++-kinds=+p --fields=+iaS --extra=+q .    
-            echohl Title | echom 'Build new Database success' | echohl None
+            silent !ctags -R --exclude=.svn --exclude=.git --c++-kinds=+p --fields=+iaS --extra=+q .
         endif
-endfunction
-
-
-function Do_CsTag()
-    let dir = getcwd()
-    if filereadable("tags")
-        if(g:iswindows==1)
-            let tagsdeleted=delete(dir."\\"."tags")
-        else
-            let tagsdeleted=delete("./"."tags")
-        endif
-        if(tagsdeleted!=0)
-            echohl WarningMsg | echo "Fail to do tags! I cannot delete the tags" | echohl None
-            return
-        endif
-    endif
-    if has("cscope")
-        silent! execute "cs kill -1"
-    endif
-    if filereadable("cscope.files")
-        if(g:iswindows==1)
-            let csfilesdeleted=delete(dir."\\"."cscope.files")
-        else
-            let csfilesdeleted=delete("./"."cscope.files")
-        endif
-        if(csfilesdeleted!=0)
-            echohl WarningMsg | echo "Fail to do cscope! I cannot delete the cscope.files" | echohl None
-            return
-        endif
-    endif
-    if filereadable("cscope.out")
-        if(g:iswindows==1)
-            let csoutdeleted=delete(dir."\\"."cscope.out")
-        else
-            let csoutdeleted=delete("./"."cscope.out")
-        endif
-        if(csoutdeleted!=0)
-            echohl WarningMsg | echo "Fail to do cscope! I cannot delete the cscope.out" | echohl None
-            return
-        endif
-    endif
-    if(executable('ctags'))
-        "silent! execute "!ctags -R --c-types=+p --fields=+S *"
-        silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
-    endif
-    if(executable('cscope') && has("cscope") )
-        if(g:iswindows!=1)
-            silent! execute "!find . -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.java' -o -name '*.cs' > cscope.files"
-        else
-            silent! execute "!dir /s/b *.c,*.cpp,*.h,*.java,*.cs >> cscope.files"
-        endif
-        silent! execute "!cscope -b"
-        execute "normal :"
-        if filereadable("cscope.out")
-            execute "cs add cscope.out"
-        endif
-    endif
 endfunction
