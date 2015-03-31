@@ -11,4 +11,10 @@ Vim
 ,g  : show result
 
 tab5: jump ()
+
+Tab Code:
+V
+> or < 
+ . to repeat , or u to undo 
+gv reselect the lines 
 ```
