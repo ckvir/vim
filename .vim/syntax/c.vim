@@ -1,32 +1,7 @@
-" Vim syntax file
-" Language: C Additions
-" Maintainer: Jon Haggblad <jon@haeggblad.com>
-" Contributor: Mikhail Wolfson <mywolfson@gmail.com>
-" URL: http://www.haeggblad.com
-" Last Change: 6 Sep 2014
-" Version: 0.3
-" Changelog:
-"   0.3 - integration of aftersyntaxc.vim
-"   0.2 - Cleanup
-"   0.1 - initial version.
-"
-" Syntax highlighting for functions in C.
-"
-" Based on:
-"   http://stackoverflow.com/questions/736701/class-function-names-highlighting-in-vim
-
-" -----------------------------------------------------------------------------
-"  Highlight function names.
-" -----------------------------------------------------------------------------
-syn match    cCustomParen    "(" contains=cParen contains=cCppParen
-syn match    cCustomFunc     "\w\+\s*(\@=" contains=cCustomParen
-hi def link cCustomFunc  Function
-
-" -----------------------------------------------------------------------------
-"  Source: aftersyntaxc.vim
-" -----------------------------------------------------------------------------
-
-" Common ANSI-standard functions
+"/****************************************************************************************   
+"【 Common ANSI-standard functions 】                                                                
+" @ cAnsiFunction	
+" ***************************************************************************************/
 syn keyword cAnsiFunction	MULU_ DIVU_ MODU_ MUL_ DIV_ MOD_
 syn keyword cAnsiFunction	main typeof
 syn keyword cAnsiFunction	open close read write lseek dup dup2
@@ -195,6 +170,52 @@ syn keyword cAnsiFunction	UINTMAX_C INTMAX_C UINT64_C
 syn keyword cAnsiFunction	UINT32_C UINT16_C UINT8_C
 syn keyword cAnsiFunction	INT64_C INT32_C INT16_C INT8_C
 
+"/****************************************************************************************   
+"【 邏輯運算子 】                                                                
+" @ cAnsiName	
+" ***************************************************************************************/
+syn keyword	cAnsiName	and bitor not_eq xor
+syn keyword	cAnsiName	and_eq compl or xor_eq
+syn keyword	cAnsiName	bitand not or_eq
+syn keyword cAnsiBoolean true false TRUE FALSE
+
+"/****************************************************************************************   
+"【 運算子 】                                                                
+" @ cOperator	
+" ***************************************************************************************/
+syn match cAnsiOperator	"\(<<\|>>\|[-+*/%&^|<>!=]\)="
+syn match cAnsiOperator	"<<\|>>\|&&\|||\|++\|--\|->"
+syn match cAnsiOperator	"[.!~*&%<>^|=,+-]"
+syn match cAnsiOperator	"/[^/*=]"me=e-1
+syn match cAnsiOperator	"/$"
+syn match cAnsiOperator "&&\|||"
+
+"/****************************************************************************************   
+"【 指標 】                                                                
+" ***************************************************************************************/
+syn match cAnsiPointer "\*\{1,3\}\w\+"
+syn match cAnsiPointer "&\w\+"
+syn match cAnsiPointer "->\w\+"
+syn match cAnsiPointer "\.\w\+"
+
+
+"/****************************************************************************************   
+"【 Functions 】                                                                
+" ***************************************************************************************/
+syn match cUserFunction "\<\h\w*\>\(\s\|\n\)*("me=e-1 contains=cType,cDelimiter,cDefine
+syn match cUserFunctionPointer "(\s*\*\s*\h\w*\s*)\(\s\|\n\)*(" contains=cDelimiter,cOperator
+
+
+"/****************************************************************************************   
+"【 屬性 】                                                                
+" ***************************************************************************************/
+"syntax match cUserTag   /[a-zA-Z][a-zA-Z\d_]*/
+
+
+"/****************************************************************************************   
+"【 目前無作用 】                                                                
+" ***************************************************************************************/
+if 0
 " Common ANSI-standard Names
 syn keyword	cAnsiName	PRId8 PRIi16 PRIo32 PRIu64
 syn keyword	cAnsiName	PRId16 PRIi32 PRIo64 PRIuLEAST8
@@ -211,7 +232,6 @@ syn keyword	cAnsiName	PRIdFAST64 PRIiMAX PRIoPTR PRIx8
 syn keyword	cAnsiName	PRIdMAX PRIiPTR PRIu8 PRIx16
 syn keyword	cAnsiName	PRIdPTR PRIo8 PRIu16 PRIx32
 syn keyword	cAnsiName	PRIi8 PRIo16 PRIu32 PRIx64
-
 syn keyword	cAnsiName	PRIxLEAST8 SCNd8 SCNiFAST32 SCNuLEAST32
 syn keyword	cAnsiName	PRIxLEAST16 SCNd16 SCNiFAST64 SCNuLEAST64
 syn keyword	cAnsiName	PRIxLEAST32 SCNd32 SCNiMAX SCNuFAST8
@@ -236,56 +256,8 @@ syn keyword	cAnsiName	PRIXFAST32 SCNiLEAST32 SCNu32 SCNxMAX
 syn keyword	cAnsiName	PRIXFAST64 SCNiLEAST64 SCNu64 SCNxPTR
 syn keyword	cAnsiName	PRIXMAX SCNiFAST8 SCNuLEAST8
 syn keyword	cAnsiName	PRIXPTR SCNiFAST16 SCNuLEAST16
-
 syn keyword	cAnsiName	errno environ
-
 syn keyword	cAnsiName	STDC CX_LIMITED_RANGE
 syn keyword	cAnsiName	STDC FENV_ACCESS
 syn keyword	cAnsiName	STDC FP_CONTRACT
-
-syn keyword	cAnsiName	and bitor not_eq xor
-syn keyword	cAnsiName	and_eq compl or xor_eq
-syn keyword	cAnsiName	bitand not or_eq
-
-hi def link cAnsiFunction cFunction
-hi def link cAnsiName cIdentifier
-hi def link cFunction Function
-hi def link cIdentifier Identifier
-
-" Booleans
-syn keyword cBoolean true false TRUE FALSE
-hi def link cBoolean Boolean
-
-" -----------------------------------------------------------------------------
-"  Additional optional highlighting
-" -----------------------------------------------------------------------------
-
-" Operators
-"syn match cOperator	"\(<<\|>>\|[-+*/%&^|<>!=]\)="
-"syn match cOperator	"<<\|>>\|&&\|||\|++\|--\|->"
-"syn match cOperator	"[.!~*&%<>^|=,+-]"
-"syn match cOperator	"/[^/*=]"me=e-1
-"syn match cOperator	"/$"
-"syn match cOperator "&&\|||"
-"syn match cOperator	"[][]"
-"
-"" Preprocs
-"syn keyword cDefined defined contained containedin=cDefine
-"hi def link cDefined cDefine
-
-"" Functions
-"syn match cUserFunction "\<\h\w*\>\(\s\|\n\)*("me=e-1 contains=cType,cDelimiter,cDefine
-"syn match cUserFunctionPointer "(\s*\*\s*\h\w*\s*)\(\s\|\n\)*(" contains=cDelimiter,cOperator
-"
-"hi def link cUserFunction cFunction
-"hi def link cUserFunctionPointer cFunction
-"
-"" Delimiters
-"syn match cDelimiter    "[();\\]"
-"" foldmethod=syntax fix, courtesy of Ivan Freitas
-"syn match cBraces display "[{}]"
-
-" Links
-"hi def link cDelimiter Delimiter
-" foldmethod=syntax fix, courtesy of Ivan Freitas
-"hi def link cBraces Delimiter
+endif

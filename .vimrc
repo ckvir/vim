@@ -64,14 +64,16 @@ Plugin 'gmarik/Vundle.vim'
 " @ tagbar 																				: 顯示目前檔案函式、變數、巨集
 " @ vim-airline 																	: 顯示詳細下方狀態列
 " @ indentLine 																		: 顯示垂直提示線									（X）
-" @ vim-cpp-enhanced-highlight 										: 方法高亮
+" @ xterm-color-table.vim 										    : 測試顏色工具（執行 :XtermColorTable）
 " ***************************************************************************************/
 Plugin 'xcrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'majutsush/tagbar'
 Plugin 'bling/vim-airline'
-"Plugin 'Yggdroot/indentLine'
-Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'Yggdroot/indentLine'
+Plugin 'guns/xterm-color-table.vim'
+
+
 
 
 "/****************************************************************************************
@@ -79,7 +81,7 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 " @ vim-easymotion 																: 快速移動
 " @ unite.vim 																		: 找檔案
 " @ neomru.vim 																		: 顯示歷史紀錄
-" @ OmniCppComplete 															: .   補完屬性，^n^p 選擇
+" @ OmniCppComplete 															: . 補完屬性，^n^p 選擇
 " @ supertab 															        : Tab 補完 var name
 " @ snipmate.vim 															    : 補完 if、for，改熱鍵 （vim/after/plugin/snipMate.vim）
 " ***************************************************************************************/
@@ -89,6 +91,7 @@ Plugin 'Shougo/neomru.vim'
 Plugin 'vim-scripts/OmniCppComplete'
 Plugin 'ervandew/supertab'
 Plugin 'msanders/snipmate.vim'
+
 
 
 
@@ -103,6 +106,9 @@ filetype plugin indent on    " required
 " :PluginSearch foo - searches for foo; append `!` to refresh local cache
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 " see :h vundle for more details or wiki for FAQ
+
+
+
 
 
 " ＃＃＃＃＃ 套件設定 ＃＃＃＃＃
@@ -164,7 +170,6 @@ set updatetime=100
 "nmap <F1>     :TagbarToggle<CR>
 "let g:tagbar_show_linenumbers=1
 "let g:tagbar_expend=1
-
 
 
 "/****************************************************************************************
@@ -236,15 +241,6 @@ nmap <leader>f       :Unite -start-insert file_rec<CR>
 nmap <silent><leader>uu :<C-u>Unite file_mru buffer<CR>
 
 
-"/****************************************************************************************
-"【 vim-cpp-enhanced-highlight 】                                                                    
-" @ Function Highlight
-" ***************************************************************************************/
-let g:cpp_class_scope_highlight = 1
-let g:cpp_experimental_template_highlight = 1
-
-
-
 " ＃＃＃＃＃ 一般設定 ＃＃＃＃＃
 "/****************************************************************************************                                                                 
 " @ ic																						： 搜尋忽略大小寫
@@ -296,25 +292,29 @@ set expandtab
 "set autoread
 
 
+
 " ＃＃＃＃＃ 配色 ＃＃＃＃＃
 "/****************************************************************************************                                                                 
 " @ Tomorrow-Night																： 選擇樣式
 " @ t_Co=256 																			： 開啟顏色
 " @ syntax on																			： 語法上色
+" @ \e[0																			    ： default
+" @ \e[1																			    ： Cursor blinking block
+" @ \e[2																			    ： Cursor steady block
+" @ \e[3																			    ： Cursor blinking underscore
+" @ \e[4																			    ： Cursor steady underscore
+" @ \e[5																			    ： Cursor blinking line
+" @ \e[6																			    ： Cursor steady line 
+" @ :so $VIMRUNTIME/syntax/hitest.vim					    ： 目前可使用顏色
 " ***************************************************************************************/
-colorscheme Tomorrow-Night
+"colorscheme Tomorrow-Night
+colorscheme JasonCC-Night
 set t_Co=256
 syntax on
-
-
-
-
-
-
-
-
-
-
+let &t_ti.="\e[2 q"
+let &t_SI.="\e[5 q"
+let &t_EI.="\e[2 q"
+let &t_te.="\e[0 q"
 
 
 " ＃＃＃＃＃ 熱鍵 ＃＃＃＃＃
@@ -335,6 +335,7 @@ syntax on
 " @ <Tab>8 																				： 行首
 " @ <C-c>																					： 複製
 " @ <C-p> 																				： 貼上
+" @ -a 																				    ： 取得游標所在屬性，用來改 color
 " ***************************************************************************************/      　                           
 nmap <F12>               :call CreateDB()<CR>
 nmap <F9>                :w<CR> :!gcc % -o %< && ./%< <CR>
@@ -347,8 +348,7 @@ nmap <Tab>9              <ESC>$
 nmap <Tab>8              <ESC>^
 nmap <leader>fp          :echo expand('%:p')<CR>
 nmap <leader>rr          :reg<CR>
-nmap <leader>hlv         :call HighlightVar()<CR>
-nmap <leader>chlv        :call CloseHighlightVar()<CR>
+nmap <leader>mhl         :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
 nmap <S-f>               <C-f>
 nmap <S-d>               <C-b>
 nmap <S-s>               :w<cr>
@@ -358,7 +358,7 @@ nmap <C-c>               "pyiw
 vmap <C-p>               "pp
 nmap <C-p>               "pP
 imap <C-p>               <Esc>"ppa
-
+map  -a	                 :call SyntaxAttr()<CR>
 
 " ＃＃＃＃＃ 切換視窗 ＃＃＃＃＃
 nmap <Tab>h <C-w>h
@@ -395,7 +395,7 @@ if !exists("*CreateDB")
             silent !echo 'Execute Cscope and Ctags now,Please Wait...'
             silent !find ./ -name '*.aidl' -o -name '*.cc' -o -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.java' -o -name '*.py' > 'cscope.files'
             silent !cscope -Rbq -i 'cscope.files'
-            silent !ctags -R --exclude=.svn --exclude=.git --c++-kinds=+p --fields=+iaS --extra=+q .
+            silent !ctags -R --c-kinds=+l --exclude=.svn --exclude=.git --c++-kinds=+p --fields=+iaS --extra=+q .
         endif
     endfunction
 endif
@@ -440,22 +440,92 @@ au BufEnter /* call LoadCscope()
 
 
 "/****************************************************************************************                                                                 
-" @ 高亮變數
+" @ 高亮滑鼠所在變數
 " ***************************************************************************************/  
-if !exists("*HighlightVar")
-    function HighlightVar()
-			autocmd CursorMoved * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
-    endfunction
-endif
+function! AutoHighlightToggle()
+  let @/ = ''
+  if exists('#auto_highlight')
+    au! auto_highlight
+    augroup! auto_highlight
+    setl updatetime=4000
+    echo 'Highlight current word: off'
+    return 0
+  else
+    augroup auto_highlight
+      au!
+      au CursorHold * let @/ = '\V\<'.escape(expand('<cword>'), '\').'\>'
+    augroup end
+    setl updatetime=100
+    echo 'Highlight current word: ON'
+    return 1
+  endif
+endfunction
+
 
 "/****************************************************************************************                                                                 
-" @ 關閉高亮變數
+" @ 取得屬性
 " ***************************************************************************************/  
-if !exists("*CloseHighlightVar")
-    function CloseHighlightVar()
-			autocmd! CursorMoved *
-    endfunction
-endif
+function! SyntaxAttr()
+     let synid = ""
+     let guifg = ""
+     let guibg = ""
+     let gui   = ""
+
+     let id1  = synID(line("."), col("."), 1)
+     let tid1 = synIDtrans(id1)
+
+     if synIDattr(id1, "name") != ""
+	  let synid = "group: " . synIDattr(id1, "name")
+	  if (tid1 != id1)
+	       let synid = synid . '->' . synIDattr(tid1, "name")
+	  endif
+	  let id0 = synID(line("."), col("."), 0)
+	  if (synIDattr(id1, "name") != synIDattr(id0, "name"))
+	       let synid = synid .  " (" . synIDattr(id0, "name")
+	       let tid0 = synIDtrans(id0)
+	       if (tid0 != id0)
+		    let synid = synid . '->' . synIDattr(tid0, "name")
+	       endif
+	       let synid = synid . ")"
+	  endif
+     endif
+
+     " Use the translated id for all the color & attribute lookups; the linked id yields blank values.
+     if (synIDattr(tid1, "fg") != "" )
+	  let guifg = " guifg=" . synIDattr(tid1, "fg") . "(" . synIDattr(tid1, "fg#") . ")"
+     endif
+     if (synIDattr(tid1, "bg") != "" )
+	  let guibg = " guibg=" . synIDattr(tid1, "bg") . "(" . synIDattr(tid1, "bg#") . ")"
+     endif
+     if (synIDattr(tid1, "bold"     ))
+	  let gui   = gui . ",bold"
+     endif
+     if (synIDattr(tid1, "italic"   ))
+	  let gui   = gui . ",italic"
+     endif
+     if (synIDattr(tid1, "reverse"  ))
+	  let gui   = gui . ",reverse"
+     endif
+     if (synIDattr(tid1, "inverse"  ))
+	  let gui   = gui . ",inverse"
+     endif
+     if (synIDattr(tid1, "underline"))
+	  let gui   = gui . ",underline"
+     endif
+     if (gui != ""                  )
+	  let gui   = substitute(gui, "^,", " gui=", "")
+     endif
+
+     echohl MoreMsg
+     let message = synid . guifg . guibg . gui
+     if message == ""
+	  echohl WarningMsg
+	  let message = "<no syntax group here>"
+     endif
+     echo message
+     echohl None
+endfunction
+
 
 
 "/****************************************************************************************
