@@ -59,12 +59,12 @@ Plugin 'gmarik/Vundle.vim'
 
 "/****************************************************************************************
 "【 UI 】                                                                    
-" @ nerdtree          														: 顯示目前目錄結構
-" @ vim-nerdtree-tabs 														: 加強 Nerdtree，要先安裝 Nerdtree
-" @ tagbar 																				: 顯示目前檔案函式、變數、巨集
-" @ vim-airline 																	: 顯示詳細下方狀態列
-" @ indentLine 																		: 顯示垂直提示線									（X）
-" @ xterm-color-table.vim 										    : 測試顏色工具（執行 :XtermColorTable）
+" @ nerdtree                                      : 顯示目前目錄結構
+" @ vim-nerdtree-tabs                             : 加強 Nerdtree，要先安裝 Nerdtree
+" @ tagbar                                        : 顯示目前檔案函式、變數、巨集
+" @ vim-airline                                   : 顯示詳細下方狀態列
+" @ indentLine                                    : 顯示垂直提示線                 （X）
+" @ xterm-color-table.vim                         : 測試顏色工具（執行 :XtermColorTable）
 " ***************************************************************************************/
 Plugin 'xcrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -78,14 +78,14 @@ Plugin 'guns/xterm-color-table.vim'
 
 "/****************************************************************************************
 "【 Util 】                                                                    
-" @ vim-easymotion 																: 快速移動
-" @ unite.vim 																		: 找檔案
-" @ neomru.vim 																		: 顯示歷史紀錄
-" @ OmniCppComplete 															: .     補完屬性，^n^p 選擇
-" @ supertab 															        : Tab   補完變數
-" @ snipmate.vim 															    : S+Tab 補完 if（改熱鍵：vim/after/plugin/snipMate.vim）
-" @ tabular 															        : 對齊程式碼
-" @ CCTree 															          : Trace Code
+" @ vim-easymotion                                : 快速移動
+" @ unite.vim                                     : 找檔案
+" @ neomru.vim                                    : 顯示歷史紀錄
+" @ OmniCppComplete                               : .     補完屬性，^n^p 選擇
+" @ supertab                                      : Tab   補完變數
+" @ snipmate.vim                                  : S+Tab 補完 if（改熱鍵：vim/after/plugin/snipMate.vim）
+" @ tabular                                       : 對齊程式碼
+" @ CCTree                                        : Trace Code
 " ***************************************************************************************/
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'Shougo/unite.vim'
@@ -126,15 +126,15 @@ filetype plugin indent on    " required
 " ＃＃＃＃＃ 套件設定 ＃＃＃＃＃
 "/****************************************************************************************
 "【 NerdTree 】                                                                    
-" @ o  																						: 開關資料夾（和 Enter 一樣）
-" @ p/P																						: 到上層目錄/到根目錄
-" @ K/J																						: 同層目錄最上/下
-" @ m  																						: 顯示 MENU（a:新增檔案）
-" @ NERDTreeWinPos  															: 預設窗口在右邊
-" @ NERDTreeIgnore  															: 忽略檔案
-" @ <F2>  																				: F2 開/關												（X）
-" @ VimEnter * NERDTree  													: 預設開啟 NERDTree								（X）
-" @ BufEnter * NERDTreeMirror  										: 開啟新分頁時自動開啟 NERDTree		（X）
+" @ o                                             : 開關資料夾（和 Enter 一樣）
+" @ p/P                                           : 到上層目錄/到根目錄
+" @ K/J                                           : 同層目錄最上/下
+" @ m                                             : 顯示 MENU（a:新增檔案）
+" @ NERDTreeWinPos                                : 預設窗口在右邊
+" @ NERDTreeIgnore                                : 忽略檔案
+" @ <F2>                                          : F2 開/關                        （X）
+" @ VimEnter * NERDTree                           : 預設開啟 NERDTree               （X）
+" @ BufEnter * NERDTreeMirror                     : 開啟新分頁時自動開啟 NERDTree   （X）
 " ***************************************************************************************/
 "map <F2>      :NERDTreeToggle<CR>
 "au  VimEnter * NERDTree
@@ -157,8 +157,8 @@ let g:NERDTreeIgnore=[
 "/****************************************************************************************
 "【 NerdTree-Tab 】                                                                    
 " @ 強化 NerdTree，需要先安裝 NerdTree
-" @  NERDTreeTabsToggle														： 預設開啟 NerdTree-Tab
-" @ g:nerdtree_tabs_open_on_console_startup=1			： 開啟新分頁時自動開啟 NerdTree-Tab
+" @  NERDTreeTabsToggle                           ： 預設開啟 NerdTree-Tab
+" @ g:nerdtree_tabs_open_on_console_startup=1     ： 開啟新分頁時自動開啟 NerdTree-Tab
 " ***************************************************************************************/
 map <F11>      :NERDTreeTabsToggle<CR>
 au  VimEnter * NERDTreeTabsToggle
@@ -167,14 +167,14 @@ let g:nerdtree_tabs_open_on_console_startup=1
 
 "/****************************************************************************************
 "【 Tagbar 】                                                                    
-" @ VimEnter * Tagbar															： 預設開啟 Tagbar
-" @ BufEnter * nested :call tagbar#autoopen(0) 		： 開啟新分頁時自動開啟 Tagbar
-" @ g:tagbar_left=1  															： 預設窗口在左邊
-" @ g:tagbar_width=30 														： 寬度 30
-" @ updatetime=100  															： 反映時間（毫秒）
-" @ <F1>																					： F1 開/關												（X）
-" @ g:tagbar_show_linenumbers=1   								： 顯示行號	     									（X）					
-" @ g:tagbar_expend=1  														： 自動 GUI 視窗 NerdTree-Tab			（X）
+" @ VimEnter * Tagbar                             ： 預設開啟 Tagbar
+" @ BufEnter * nested :call tagbar#autoopen(0)    ： 開啟新分頁時自動開啟 Tagbar
+" @ g:tagbar_left=1                               ： 預設窗口在左邊
+" @ g:tagbar_width=30                             ： 寬度 30
+" @ updatetime=100                                ： 反映時間（毫秒）
+" @ <F1>                                          ： F1 開/關                        （X）
+" @ g:tagbar_show_linenumbers=1                   ： 顯示行號                        （X）         
+" @ g:tagbar_expend=1                             ： 自動 GUI 視窗 NerdTree-Tab      （X）
 " ***************************************************************************************/
 au  VimEnter * Tagbar
 let g:tagbar_left=1
@@ -195,18 +195,18 @@ let g:EasyMotion_leader_key='e'
 
 "/****************************************************************************************
 "【 Cscope 】                                                                    
-" @ c <F1>																				: 找呼叫此函式
-" @ g	<F2>																				: 找定義此函式/變數
-" @ s <F3>																				: 找所有定義和呼叫（等於 c+g）
-" @ d																							: 找此函式中有呼叫的函式
-" @ e																							: 查找此字串以 egrep 搜尋（命令列較適合）
-" @ f																							: 查找並開檔（命令列較適合）
-" @ i																							: 查找列出 include 此檔的檔案（命令列較適合）
-" @ t																							: 查找所有此字串出現的地方，包含註解（命令列較適合）
-" @ <leader>f																			: 找下一個搜尋結果
-" @ <leader>d																			: 找上一個搜尋結果
-" @ <leader>g																			: 打開搜尋結果
-" @ <Tab>t   																			: 回上頁
+" @ c <F1>                                        : 找呼叫此函式
+" @ g <F2>                                        : 找定義此函式/變數
+" @ s <F3>                                        : 找所有定義和呼叫（等於 c+g）
+" @ d                                             : 找此函式中有呼叫的函式
+" @ e                                             : 查找此字串以 egrep 搜尋（命令列較適合）
+" @ f                                             : 查找並開檔（命令列較適合）
+" @ i                                             : 查找列出 include 此檔的檔案（命令列較適合）
+" @ t                                             : 查找所有此字串出現的地方，包含註解（命令列較適合）
+" @ <leader>f                                     : 找下一個搜尋結果
+" @ <leader>d                                     : 找上一個搜尋結果
+" @ <leader>g                                     : 打開搜尋結果
+" @ <Tab>t                                        : 回上頁
 " ***************************************************************************************/
 set cscopequickfix=s-,c-,d-,i-,t-,e-
 nmap <F1>        :cs find c <C-R>=expand("<cword>")<CR><CR>
@@ -228,8 +228,8 @@ nmap <Tab>t <C-o>
 "/****************************************************************************************
 "【 Unite 】                                                                    
 " @ 找到檔案後，進入 Normal Mode 選檔
-" @ <leader>b																			： 看 buff													（X）
-" @ <leader>f																			： 找檔案
+" @ <leader>b                                     ： 看 buff                          （X）
+" @ <leader>f                                     ： 找檔案
 " ***************************************************************************************/
 nmap <leader>f       :Unite -start-insert file_rec<CR>
 " nmap <leader>b       :Unite file buffer<CR>
@@ -241,14 +241,14 @@ nmap <leader>f       :Unite -start-insert file_rec<CR>
 " @ nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 " @ nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 " @ nnoremap <silent> ,uk :<C-u>Unite bookmark<CR>
-" @ ,uu 																					: 看 buff	+ 歷史紀錄
+" @ ,uu                                           : 看 buff  + 歷史紀錄
 " ***************************************************************************************/
 nmap <silent><leader>uu :<C-u>Unite file_mru buffer<CR>
 
 "/****************************************************************************************
 "【 Tabularize 】                                                                    
-" @ <leader>a= 						: 對其等號
-" @ <leader>a: 						: 對其冒號
+" @ <leader>a=            : 對其等號
+" @ <leader>a:            : 對其冒號
 " ***************************************************************************************/
 "if exists(":Tabularize")
 nmap <leader>a= :Tabularize /=<CR>
@@ -265,10 +265,10 @@ let g:autoclose_vim_commentmode = 1
 
 "/****************************************************************************************
 "【 CCTree 】                                                                    
-" autocmd VimEnter * call LoadCCTree()						：啟動 vim 自動執行，不然就要手動載入
-" <leader>>																				：caller
-" <leader><																				：callee
-" <leader>w																				：開關 CCTree 視窗
+" autocmd VimEnter * call LoadCCTree()            ：啟動 vim 自動執行，不然就要手動載入
+" <leader>>                                       ：caller
+" <leader><                                       ：callee
+" <leader>w                                       ：開關 CCTree 視窗
 " ***************************************************************************************/
 "autocmd VimEnter * call LoadCCTree()
 function! LoadCCTree()
@@ -281,7 +281,7 @@ set updatetime=0
 let g:CTreeRecursiveDepth = 6
 let g:CCTreeKeyTraceForwardTree = '<leader>>'
 let g:CCTreeKeyTraceReverseTree = '<leader><'
-let g:CCTreeKeyToggleWindow			= '<leader>w'
+let g:CCTreeKeyToggleWindow     = '<leader>w'
 nmap <leader>> :CCTreeTraceForward <C-R><C-w><CR>
 nmap <leader>< :CCTreeTraceReverse <C-R><C-w><CR>
 
@@ -289,29 +289,29 @@ nmap <leader>< :CCTreeTraceReverse <C-R><C-w><CR>
 
 " ＃＃＃＃＃ 一般設定 ＃＃＃＃＃
 "/****************************************************************************************                                                                 
-" @ ic																						： 搜尋忽略大小寫
-" @ history=300 																	： 存放最大指令數
-" @ cursorline																		： 記住游標所在列
-" @ ruler																					： 記住游標所在座標
-" @ hlsearch																			： 搜尋到的文字反白
-" @ backspace=2   																： Insert Mode 可用倒退鍵刪除
-" @ encoding=utf-8																： UTF8 編碼
-" @ fenc=utf-8																		： UTF8 編碼
-" @ ai																						： 自動縮排
-" @ aw																						： 自動存檔
-" @ nu																						： 顯示行號
-" @ mouse=nv  																		： 讓滑鼠可以拉動視窗
-" @ bk																						： 更改檔案會備份									（X）
-" @ incsearch  																		： 邊輸入關鍵字邊搜尋
-" @ scrolloff=3   																： 保持上下三行
-" @ noswapfile  																	： 關閉 swp 檔案
-" @ tabstop=4  																		： Tab 取代 4 Space
+" @ ic                                            ： 搜尋忽略大小寫
+" @ history=300                                   ： 存放最大指令數
+" @ cursorline                                    ： 記住游標所在列
+" @ ruler                                         ： 記住游標所在座標
+" @ hlsearch                                      ： 搜尋到的文字反白
+" @ backspace=2                                   ： Insert Mode 可用倒退鍵刪除
+" @ encoding=utf-8                                ： UTF8 編碼
+" @ fenc=utf-8                                    ： UTF8 編碼
+" @ ai                                            ： 自動縮排
+" @ aw                                            ： 自動存檔
+" @ nu                                            ： 顯示行號
+" @ mouse=nv                                      ： 讓滑鼠可以拉動視窗
+" @ bk                                            ： 更改檔案會備份                 （X）
+" @ incsearch                                     ： 邊輸入關鍵字邊搜尋
+" @ scrolloff=3                                   ： 保持上下三行
+" @ noswapfile                                    ： 關閉 swp 檔案
+" @ tabstop=4                                     ： Tab 取代 4 Space
 " @ cindent shiftwidth=4　　　　　　　　　　　　　： Tab 取代 4 Space
-" @ autoindent shiftwidth=4												： Tab 取代 4 Space
-" @ expandtab																			： Tab 取代 4 Space
-" @ foldmethod=indent   													： 預設不折疊											（X）
-" @ foldlevelstart=99  																															（X）
-" @ autoread   																	  ： 其他程式修改檔案時會自動重新讀取
+" @ autoindent shiftwidth=4                       ： Tab 取代 4 Space
+" @ expandtab                                     ： Tab 取代 4 Space
+" @ foldmethod=indent                             ： 預設不折疊                     （X）
+" @ foldlevelstart=99                                                               （X）
+" @ autoread                                      ： 其他程式修改檔案時會自動重新讀取
 " ***************************************************************************************/
 set ic
 set history=300
@@ -342,17 +342,17 @@ set expandtab
 
 " ＃＃＃＃＃ 配色 ＃＃＃＃＃
 "/****************************************************************************************                                                                 
-" @ Tomorrow-Night																： 選擇樣式
-" @ t_Co=256 																			： 開啟顏色
-" @ syntax on																			： 語法上色
-" @ \e[0																			    ： default
-" @ \e[1																			    ： Cursor blinking block
-" @ \e[2																			    ： Cursor steady block
-" @ \e[3																			    ： Cursor blinking underscore
-" @ \e[4																			    ： Cursor steady underscore
-" @ \e[5																			    ： Cursor blinking line
-" @ \e[6																			    ： Cursor steady line 
-" @ :so $VIMRUNTIME/syntax/hitest.vim					    ： 目前可使用顏色
+" @ Tomorrow-Night                                ： 選擇樣式
+" @ t_Co=256                                      ： 開啟顏色
+" @ syntax on                                     ： 語法上色
+" @ \e[0                                          ： default
+" @ \e[1                                          ： Cursor blinking block
+" @ \e[2                                          ： Cursor steady block
+" @ \e[3                                          ： Cursor blinking underscore
+" @ \e[4                                          ： Cursor steady underscore
+" @ \e[5                                          ： Cursor blinking line
+" @ \e[6                                          ： Cursor steady line 
+" @ :so $VIMRUNTIME/syntax/hitest.vim             ： 目前可使用顏色
 " ***************************************************************************************/
 colorscheme JasonCC-Night
 set t_Co=256
@@ -365,23 +365,23 @@ let &t_te.="\e[0 q"
 
 " ＃＃＃＃＃ 熱鍵 ＃＃＃＃＃
 "/****************************************************************************************                                                                 
-" @ <F12> 																				： 建立 ctags
-" @ <F9>																					： 編譯執行
-" @ rl（reload）																	： 重新讀取 vimrc 
-" @ jj																						： 回到 Normal Mode
-" @ <leader>nn																		： 切換行數的顯示方式
-" @ <leader>fp																		： 檔案完整路徑
-" @ <leader>mk																		： 書籤
-" @ <leader>rg																		： Register
-" @ <S-f> 																				： 翻下一頁
-" @ <S-d>																					： 翻上一頁
-" @ <S-q>																					： 關閉 VIM，不存檔
-" @ <S-s>																					： 存檔
-" @ <Tab>9 																				： 行尾
-" @ <Tab>8 																				： 行首
-" @ <C-c>																					： 複製
-" @ <C-p> 																				： 貼上
-" @ -a 																				    ： 取得游標所在屬性，用來改 color
+" @ <F12>                                         ： 建立 ctags
+" @ <F9>                                          ： 編譯執行
+" @ rl（reload）                                  ： 重新讀取 vimrc 
+" @ jj                                            ： 回到 Normal Mode
+" @ <leader>nn                                    ： 切換行數的顯示方式
+" @ <leader>fp                                    ： 檔案完整路徑
+" @ <leader>mk                                    ： 書籤
+" @ <leader>rg                                    ： Register
+" @ <S-f>                                         ： 翻下一頁
+" @ <S-d>                                         ： 翻上一頁
+" @ <S-q>                                         ： 關閉 VIM，不存檔
+" @ <S-s>                                         ： 存檔
+" @ <Tab>9                                        ： 行尾
+" @ <Tab>8                                        ： 行首
+" @ <C-c>                                         ： 複製
+" @ <C-p>                                         ： 貼上
+" @ -a                                            ： 取得游標所在屬性，用來改 color
 " ***************************************************************************************/      　                           
 nmap <F12>               :call CreateDB()<CR>
 nmap <F10>               :call LoadCCTree()<CR>
@@ -405,7 +405,7 @@ nmap <C-c>               "pyiw
 vmap <C-p>               "pp
 nmap <C-p>               "pP
 imap <C-p>               <Esc>"ppa
-map  -a	                 :call SyntaxAttr()<CR>
+map  -a                  :call SyntaxAttr()<CR>
 nmap <Tab>u              u
 nmap <Tab>r              <C-r>
 
@@ -420,10 +420,10 @@ nmap <Tab>l <C-w>l
 
 " ＃＃＃＃＃ 分頁 ＃＃＃＃＃
 "/****************************************************************************************                                                                 
-" @ <F5> 																					： 建立 Tab
-" @ <F6> 																					： 關閉 Tab
-" @ <F7> 																					： 下一個 Tab
-" @ <F8> 																					： 上一個 Tab
+" @ <F5>                                          ： 建立 Tab
+" @ <F6>                                          ： 關閉 Tab
+" @ <F7>                                          ： 下一個 Tab
+" @ <F8>                                          ： 上一個 Tab
 " ***************************************************************************************/  
 nmap <F5> :tabnew<CR>
 nmap <F6> :tabclose<CR>
@@ -525,52 +525,52 @@ function! SyntaxAttr()
      let tid1 = synIDtrans(id1)
 
      if synIDattr(id1, "name") != ""
-	  let synid = "group: " . synIDattr(id1, "name")
-	  if (tid1 != id1)
-	       let synid = synid . '->' . synIDattr(tid1, "name")
-	  endif
-	  let id0 = synID(line("."), col("."), 0)
-	  if (synIDattr(id1, "name") != synIDattr(id0, "name"))
-	       let synid = synid .  " (" . synIDattr(id0, "name")
-	       let tid0 = synIDtrans(id0)
-	       if (tid0 != id0)
-		    let synid = synid . '->' . synIDattr(tid0, "name")
-	       endif
-	       let synid = synid . ")"
-	  endif
+    let synid = "group: " . synIDattr(id1, "name")
+    if (tid1 != id1)
+         let synid = synid . '->' . synIDattr(tid1, "name")
+    endif
+    let id0 = synID(line("."), col("."), 0)
+    if (synIDattr(id1, "name") != synIDattr(id0, "name"))
+         let synid = synid .  " (" . synIDattr(id0, "name")
+         let tid0 = synIDtrans(id0)
+         if (tid0 != id0)
+        let synid = synid . '->' . synIDattr(tid0, "name")
+         endif
+         let synid = synid . ")"
+    endif
      endif
 
      " Use the translated id for all the color & attribute lookups; the linked id yields blank values.
      if (synIDattr(tid1, "fg") != "" )
-	  let guifg = " guifg=" . synIDattr(tid1, "fg") . "(" . synIDattr(tid1, "fg#") . ")"
+    let guifg = " guifg=" . synIDattr(tid1, "fg") . "(" . synIDattr(tid1, "fg#") . ")"
      endif
      if (synIDattr(tid1, "bg") != "" )
-	  let guibg = " guibg=" . synIDattr(tid1, "bg") . "(" . synIDattr(tid1, "bg#") . ")"
+    let guibg = " guibg=" . synIDattr(tid1, "bg") . "(" . synIDattr(tid1, "bg#") . ")"
      endif
      if (synIDattr(tid1, "bold"     ))
-	  let gui   = gui . ",bold"
+    let gui   = gui . ",bold"
      endif
      if (synIDattr(tid1, "italic"   ))
-	  let gui   = gui . ",italic"
+    let gui   = gui . ",italic"
      endif
      if (synIDattr(tid1, "reverse"  ))
-	  let gui   = gui . ",reverse"
+    let gui   = gui . ",reverse"
      endif
      if (synIDattr(tid1, "inverse"  ))
-	  let gui   = gui . ",inverse"
+    let gui   = gui . ",inverse"
      endif
      if (synIDattr(tid1, "underline"))
-	  let gui   = gui . ",underline"
+    let gui   = gui . ",underline"
      endif
      if (gui != ""                  )
-	  let gui   = substitute(gui, "^,", " gui=", "")
+    let gui   = substitute(gui, "^,", " gui=", "")
      endif
 
      echohl MoreMsg
      let message = synid . guifg . guibg . gui
      if message == ""
-	  echohl WarningMsg
-	  let message = "<no syntax group here>"
+    echohl WarningMsg
+    let message = "<no syntax group here>"
      endif
      echo message
      echohl None
@@ -580,7 +580,7 @@ endfunction
 
 "/****************************************************************************************
 "【 移除外掛 】                                                                    
-" @ molokai 																			: 顯示目前游標加亮
-" @ ctrlp.vim          														: 按下 Ctrl+p 找檔案							（X）
-" @ bufexplorer 																	: 管理 Buff												（X）
+" @ molokai                                       : 顯示目前游標加亮
+" @ ctrlp.vim                                     : 按下 Ctrl+p 找檔案             （X）
+" @ bufexplorer                                   : 管理 Buff                       （X）
 " ***************************************************************************************/
