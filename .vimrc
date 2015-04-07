@@ -1,6 +1,5 @@
 "***************************************
-" CKvir Vim 
-" 
+" 熱鍵紀錄 
 "  <L>              : Leader Key = ','
 "  --------------預設熱鍵---------------
 "  i/a/o            : 插入前/後/下一行
@@ -82,9 +81,11 @@ Plugin 'guns/xterm-color-table.vim'
 " @ vim-easymotion 																: 快速移動
 " @ unite.vim 																		: 找檔案
 " @ neomru.vim 																		: 顯示歷史紀錄
-" @ OmniCppComplete 															: . 補完屬性，^n^p 選擇
-" @ supertab 															        : Tab 補完 var name
-" @ snipmate.vim 															    : 補完 if、for，改熱鍵 （vim/after/plugin/snipMate.vim）
+" @ OmniCppComplete 															: .     補完屬性，^n^p 選擇
+" @ supertab 															        : Tab   補完變數
+" @ snipmate.vim 															    : S+Tab 補完 if（改熱鍵：vim/after/plugin/snipMate.vim）
+" @ tabular 															        : 對齊程式碼
+" @ CCTree 															          : Trace Code
 " ***************************************************************************************/
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'Shougo/unite.vim'
@@ -92,6 +93,12 @@ Plugin 'Shougo/neomru.vim'
 Plugin 'vim-scripts/OmniCppComplete'
 Plugin 'ervandew/supertab'
 Plugin 'msanders/snipmate.vim'
+Plugin 'godlygeek/tabular'
+Plugin 'vim-autoclose'
+"Plugin 'hari-rangarajan/CCTree'
+"Plugin 'dkprice/vim-easygrep'
+"Plugin 'scrooloose/syntastic'
+
 
 
 
@@ -107,6 +114,10 @@ filetype plugin indent on    " required
 " :PluginSearch foo - searches for foo; append `!` to refresh local cache
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 " see :h vundle for more details or wiki for FAQ
+
+
+
+
 
 
 
@@ -149,7 +160,9 @@ let g:NERDTreeIgnore=[
 " @  NERDTreeTabsToggle														： 預設開啟 NerdTree-Tab
 " @ g:nerdtree_tabs_open_on_console_startup=1			： 開啟新分頁時自動開啟 NerdTree-Tab
 " ***************************************************************************************/
+map <F11>      :NERDTreeTabsToggle<CR>
 au  VimEnter * NERDTreeTabsToggle
+autocmd VimEnter * wincmd p
 let g:nerdtree_tabs_open_on_console_startup=1
 
 "/****************************************************************************************
@@ -164,20 +177,20 @@ let g:nerdtree_tabs_open_on_console_startup=1
 " @ g:tagbar_expend=1  														： 自動 GUI 視窗 NerdTree-Tab			（X）
 " ***************************************************************************************/
 au  VimEnter * Tagbar
-au  BufEnter * nested :call tagbar#autoopen(0)
 let g:tagbar_left=1
 let g:tagbar_width=30
 set updatetime=100
-"nmap <F1>     :TagbarToggle<CR>
+"au  BufEnter * nested :call tagbar#autoopen(0)
+"nmap <F10>     :TagbarToggle<CR>
 "let g:tagbar_show_linenumbers=1
 "let g:tagbar_expend=1
 
 
 "/****************************************************************************************
 "【 Vim-easymotion 】                                                                    
-" @ 啟動熱鍵（ems：找字，eme：游標以下每行最前，emj：游標以下每個單字最後）
+" @ 啟動熱鍵（es：找字，ee：游標以下每行最前，ej：游標以下每個單字最後）
 " ***************************************************************************************/
-let g:EasyMotion_leader_key='em'
+let g:EasyMotion_leader_key='e'
 
 
 "/****************************************************************************************
@@ -212,23 +225,14 @@ nmap <leader>d   :cp<CR>
 nmap <leader>g   :botright copen 15<CR>
 nmap <Tab>t <C-o>
 
-
-"/****************************************************************************************
-"【 Bufexplorer 】                                                                    
-" @ 開啟 BufExplorer																																（X）
-" ***************************************************************************************/
-" nmap <silent> <F9>   :BufExplorer<CR>
-
-
 "/****************************************************************************************
 "【 Unite 】                                                                    
 " @ 找到檔案後，進入 Normal Mode 選檔
 " @ <leader>b																			： 看 buff													（X）
 " @ <leader>f																			： 找檔案
 " ***************************************************************************************/
-" nmap <leader>b       :Unite file buffer<CR>
 nmap <leader>f       :Unite -start-insert file_rec<CR>
-
+" nmap <leader>b       :Unite file buffer<CR>
 
 "/****************************************************************************************
 "【 Neomru 】                                                                    
@@ -240,6 +244,47 @@ nmap <leader>f       :Unite -start-insert file_rec<CR>
 " @ ,uu 																					: 看 buff	+ 歷史紀錄
 " ***************************************************************************************/
 nmap <silent><leader>uu :<C-u>Unite file_mru buffer<CR>
+
+"/****************************************************************************************
+"【 Tabularize 】                                                                    
+" @ <leader>a= 						: 對其等號
+" @ <leader>a: 						: 對其冒號
+" ***************************************************************************************/
+"if exists(":Tabularize")
+nmap <leader>a= :Tabularize /=<CR>
+vmap <leader>a= :Tabularize /=<CR>
+nmap <leader>a: :Tabularize /:\zs<CR>
+vmap <leader>a: :Tabularize /:\zs<CR>
+"endif
+
+"/****************************************************************************************
+"【 Autoclose 】                                                                    
+" @ {,(,[ 自動加上 ],),}
+" ***************************************************************************************/
+let g:autoclose_vim_commentmode = 1
+
+"/****************************************************************************************
+"【 CCTree 】                                                                    
+" autocmd VimEnter * call LoadCCTree()						：啟動 vim 自動執行，不然就要手動載入
+" <leader>>																				：caller
+" <leader><																				：callee
+" <leader>w																				：開關 CCTree 視窗
+" ***************************************************************************************/
+"autocmd VimEnter * call LoadCCTree()
+function! LoadCCTree()
+    if filereadable('cscope.out')
+        CCTreeLoadDB cscope.out
+    endif
+endfunc
+
+set updatetime=0
+let g:CTreeRecursiveDepth = 6
+let g:CCTreeKeyTraceForwardTree = '<leader>>'
+let g:CCTreeKeyTraceReverseTree = '<leader><'
+let g:CCTreeKeyToggleWindow			= '<leader>w'
+nmap <leader>> :CCTreeTraceForward <C-R><C-w><CR>
+nmap <leader>< :CCTreeTraceReverse <C-R><C-w><CR>
+
 
 
 " ＃＃＃＃＃ 一般設定 ＃＃＃＃＃
@@ -291,6 +336,7 @@ set expandtab
 "set foldmethod=indent
 "set foldlevelstart=99
 "set autoread
+"set lazyredraw
 
 
 
@@ -308,7 +354,6 @@ set expandtab
 " @ \e[6																			    ： Cursor steady line 
 " @ :so $VIMRUNTIME/syntax/hitest.vim					    ： 目前可使用顏色
 " ***************************************************************************************/
-"colorscheme Tomorrow-Night
 colorscheme JasonCC-Night
 set t_Co=256
 syntax on
@@ -322,7 +367,7 @@ let &t_te.="\e[0 q"
 "/****************************************************************************************                                                                 
 " @ <F12> 																				： 建立 ctags
 " @ <F9>																					： 編譯執行
-" @ rr 																						： 重新讀取 vimrc 
+" @ rl（reload）																	： 重新讀取 vimrc 
 " @ jj																						： 回到 Normal Mode
 " @ <leader>nn																		： 切換行數的顯示方式
 " @ <leader>fp																		： 檔案完整路徑
@@ -339,14 +384,15 @@ let &t_te.="\e[0 q"
 " @ -a 																				    ： 取得游標所在屬性，用來改 color
 " ***************************************************************************************/      　                           
 nmap <F12>               :call CreateDB()<CR>
+nmap <F10>               :call LoadCCTree()<CR>
 nmap <F9>                :w<CR> :!gcc % -o %< && ./%< <CR>
-nmap <silent>rg          :so $MYVIMRC<CR>
+nmap <silent>rl          :so $MYVIMRC<CR>
 nmap <leader>mk          :marks<CR>
 imap <silent>jj          <Esc>
 nmap <silent> <leader>nn :call NumberToggle()<CR>
 nmap <silent> <S-q>      :wqa<CR>
-nmap <Tab>9              <ESC>$
-nmap <Tab>8              <ESC>^
+map <Tab>9               $
+map <Tab>8               0
 nmap <leader>fp          :echo expand('%:p')<CR>
 nmap <leader>rr          :reg<CR>
 nmap <leader>mhl         :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
@@ -360,6 +406,9 @@ vmap <C-p>               "pp
 nmap <C-p>               "pP
 imap <C-p>               <Esc>"ppa
 map  -a	                 :call SyntaxAttr()<CR>
+nmap <Tab>u              u
+nmap <Tab>r              <C-r>
+
 
 " ＃＃＃＃＃ 切換視窗 ＃＃＃＃＃
 nmap <Tab>h <C-w>h
