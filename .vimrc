@@ -71,7 +71,7 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'majutsush/tagbar'
 Plugin 'bling/vim-airline'
 Plugin 'Yggdroot/indentLine'
-Plugin 'guns/xterm-color-table.vim'
+"Plugin 'guns/xterm-color-table.vim'
 
 
 
@@ -98,8 +98,6 @@ Plugin 'vim-autoclose'
 "Plugin 'hari-rangarajan/CCTree'
 "Plugin 'dkprice/vim-easygrep'
 "Plugin 'scrooloose/syntastic'
-
-
 
 
 
@@ -160,7 +158,7 @@ let g:NERDTreeIgnore=[
 " @  NERDTreeTabsToggle                           ： 預設開啟 NerdTree-Tab
 " @ g:nerdtree_tabs_open_on_console_startup=1     ： 開啟新分頁時自動開啟 NerdTree-Tab
 " ***************************************************************************************/
-map <F11>      :NERDTreeTabsToggle<CR>
+map <F11>      :call CloseUI()<CR>
 au  VimEnter * NERDTreeTabsToggle
 autocmd VimEnter * wincmd p
 let g:nerdtree_tabs_open_on_console_startup=1
@@ -190,7 +188,7 @@ set updatetime=100
 "【 Vim-easymotion 】                                                                    
 " @ 啟動熱鍵（es：找字，ee：游標以下每行最前，ej：游標以下每個單字最後）
 " ***************************************************************************************/
-let g:EasyMotion_leader_key='e'
+let g:EasyMotion_leader_key=',e'
 
 
 "/****************************************************************************************
@@ -243,7 +241,7 @@ nmap <leader>f       :Unite -start-insert file_rec<CR>
 " @ nnoremap <silent> ,uk :<C-u>Unite bookmark<CR>
 " @ ,uu                                           : 看 buff  + 歷史紀錄
 " ***************************************************************************************/
-nmap <silent><leader>uu :<C-u>Unite file_mru buffer<CR>
+nmap <silent><leader>uu :Unite file_mru buffer<CR>
 
 "/****************************************************************************************
 "【 Tabularize 】                                                                    
@@ -262,6 +260,14 @@ vmap <leader>a: :Tabularize /:\zs<CR>
 " @ {,(,[ 自動加上 ],),}
 " ***************************************************************************************/
 let g:autoclose_vim_commentmode = 1
+
+"/****************************************************************************************
+"【 supertab 】                                                                    
+" 用空白建選擇跳出視窗的選項
+" ***************************************************************************************/
+inoremap <expr> <Space> pumvisible() ? "\<C-y>" : " "
+"inoremap <expr> m 			pumvisible() ? "\<C-N>" : "j"
+"inoremap <expr> , 			pumvisible() ? "\<C-P>" : "k"
 
 "/****************************************************************************************
 "【 CCTree 】                                                                    
@@ -294,7 +300,7 @@ nmap <leader>< :CCTreeTraceReverse <C-R><C-w><CR>
 " @ cursorline                                    ： 記住游標所在列
 " @ ruler                                         ： 記住游標所在座標
 " @ hlsearch                                      ： 搜尋到的文字反白
-" @ backspace=2                                   ： Insert Mode 可用倒退鍵刪除
+" @ set backspace=indent,eol,start                ： Insert Mode 可用倒退鍵刪除
 " @ encoding=utf-8                                ： UTF8 編碼
 " @ fenc=utf-8                                    ： UTF8 編碼
 " @ ai                                            ： 自動縮排
@@ -302,16 +308,14 @@ nmap <leader>< :CCTreeTraceReverse <C-R><C-w><CR>
 " @ nu                                            ： 顯示行號
 " @ mouse=nv                                      ： 讓滑鼠可以拉動視窗
 " @ bk                                            ： 更改檔案會備份                 （X）
-" @ incsearch                                     ： 邊輸入關鍵字邊搜尋
+" @ incsearch                                     ： 邊輸入關鍵字邊搜尋             （X）
 " @ scrolloff=3                                   ： 保持上下三行
 " @ noswapfile                                    ： 關閉 swp 檔案
-" @ tabstop=4                                     ： Tab 取代 4 Space
-" @ cindent shiftwidth=4　　　　　　　　　　　　　： Tab 取代 4 Space
-" @ autoindent shiftwidth=4                       ： Tab 取代 4 Space
-" @ expandtab                                     ： Tab 取代 4 Space
+" @ tabstop=4 shiftwidth=4 expandtab              ： Tab 取代 4 Space
 " @ foldmethod=indent                             ： 預設不折疊                     （X）
 " @ foldlevelstart=99                                                               （X）
 " @ autoread                                      ： 其他程式修改檔案時會自動重新讀取
+" @ whichwrap+=<,>,h,l,[,]                        ： 移動游標到行頭或行尾時可以跳下一行
 " ***************************************************************************************/
 set ic
 set history=300
@@ -326,19 +330,16 @@ set aw
 set nu
 set mouse=nv
 "set bk
-set incsearch
-set scrolloff=3
+"set incsearch
+set scrolloff=10
 set noswapfile
-set tabstop=4
-set cindent shiftwidth=4
-set autoindent shiftwidth=4
-set expandtab
+set tabstop=4 shiftwidth=4 expandtab
 "set foldmethod=indent
 "set foldlevelstart=99
 "set autoread
 "set lazyredraw
-
-
+set autoread
+set whichwrap+=<,>,h,l,[,]
 
 " ＃＃＃＃＃ 配色 ＃＃＃＃＃
 "/****************************************************************************************                                                                 
@@ -369,7 +370,7 @@ let &t_te.="\e[0 q"
 " @ <F9>                                          ： 編譯執行
 " @ rl（reload）                                  ： 重新讀取 vimrc 
 " @ jj                                            ： 回到 Normal Mode
-" @ <leader>nn                                    ： 切換行數的顯示方式
+" @ <leader>jj                                    ： 切換行數的顯示方式
 " @ <leader>fp                                    ： 檔案完整路徑
 " @ <leader>mk                                    ： 書籤
 " @ <leader>rg                                    ： Register
@@ -382,6 +383,13 @@ let &t_te.="\e[0 q"
 " @ <C-c>                                         ： 複製
 " @ <C-p>                                         ： 貼上
 " @ -a                                            ： 取得游標所在屬性，用來改 color
+" @ <leader>e                                     ： 在 cmd 上面打開路徑              （X）
+" @ %                                             ： 跳到對稱的符號並選取
+" @ <Space>                                       ： 取消搜尋高亮
+" @ D                                             ： nmode 將 D 改 d 以免誤觸
+" @ -------------------------------------------------------------------------
+" @ :,/,?                                         ： 可以直接看歷史紀錄或是輸入新指令
+" @ dts                                           ： 插入模式下面可以填上時間
 " ***************************************************************************************/      　                           
 nmap <F12>               :call CreateDB()<CR>
 nmap <F10>               :call LoadCCTree()<CR>
@@ -402,20 +410,29 @@ nmap <S-s>               :w<cr>
 nmap <Tab>5              %
 vmap <C-c>               "py
 nmap <C-c>               "pyiw
-vmap <C-p>               "pp
-nmap <C-p>               "pP
-imap <C-p>               <Esc>"ppa
+vmap <C-v>               "pp
+nmap <C-v>               "pP
+imap <C-v>               <Esc>"ppa
 map  -a                  :call SyntaxAttr()<CR>
-nmap <Tab>u              u
-nmap <Tab>r              <C-r>
+nmap <C-y>              <C-r>
+nmap <leader>e          :e <C-R>=expand('%:p:h') . '/'<CR>
+nmap %                   v%
+nmap <silent> <Space>    :nohlsearch<Bar>:echo<CR>
+"nmap :                  q:i
+nmap /                  q/i
+"nmap ?                  q?i
+iab <expr> dts          strftime("%c")
 
 
-" ＃＃＃＃＃ 切換視窗 ＃＃＃＃＃
+" ＃＃＃＃＃ 切換視窗/移動同時移動視窗 ＃＃＃＃＃
 nmap <Tab>h <C-w>h
 nmap <Tab>j <C-w>j
 nmap <Tab>k <C-w>k
 nmap <Tab>l <C-w>l
-
+nmap <C-J>               :call <SID>Saving_scroll("1<C-V><C-D>")<CR>
+vmap <C-J>               <Esc>:call <SID>Saving_scroll("gv1<C-V><C-D>")<CR>
+nmap <C-K>               :call <SID>Saving_scroll("1<C-V><C-U>")<CR>
+vmap <C-K>               <Esc>:call <SID>Saving_scroll("gv1<C-V><C-U>")<CR>
 
 
 " ＃＃＃＃＃ 分頁 ＃＃＃＃＃
@@ -575,6 +592,25 @@ function! SyntaxAttr()
      echo message
      echohl None
 endfunction
+
+"/****************************************************************************************                                                                 
+" @ 高亮滑鼠所在變數
+" ***************************************************************************************/  
+function! CloseUI()
+exe "NERDTreeTabsToggle"
+exe "TagbarToggle"
+endfunction
+
+"/****************************************************************************************                                                                 
+" @ 移動同時移動視窗
+" ***************************************************************************************/  
+function! s:Saving_scroll(cmd)
+  let save_scroll = &scroll
+  execute 'normal! ' . a:cmd
+  let &scroll = save_scroll
+endfunction
+
+
 
 
 

@@ -37,6 +37,7 @@ let s:jtypefg     = "81C7EB"
 let s:jincludefg  = "008200"
 let s:jstorclassfg= "C280C2"
 let s:jfuncfg     = "87AFD7"
+let s:jblack      = "000000"
 
 
 
@@ -349,6 +350,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 " @ Define                                        ： 
 " @ Include                                       ： include
 " @ Ignore                                        ： 
+" @ PmenuSel                                      ： 跳出視窗（選中） 
 " ***************************************************************************************/    
   call <SID>X("Comment"     , s:comment     , ""          , "")
   call <SID>X("Todo"        , s:comment     , s:background, "")
@@ -361,14 +363,18 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   "call <SID>X("Function"   , s:blue        , ""          , "")
   call <SID>X("Constant"    , s:orange      , ""          , "")
   call <SID>X("Keyword"     , s:orange      , ""          , "")
-  call <SID>X("String"      , s:jstrfg      , s:jstrbg    , "")
-  call <SID>X("Special"     , s:jspecfg     , s:jstrbg    , "bold")
+  call <SID>X("String"      , s:jstrbg      , ""    			, "")
+  call <SID>X("Special"     , s:jstrbg      , ""    			, "bold")
   call <SID>X("PreProc"     , s:jpreprocfg  , ""          , "")
   call <SID>X("Operator"    , s:aqua        , ""          , "none")
   "call <SID>X("Type"       , s:jtypefg     , ""          , "none")
   call <SID>X("Define"      , s:purple      , ""          , "none")
   call <SID>X("Include"     , s:jincludefg  , ""          , "")
   call <SID>X("Ignore"      , "666666"      , ""          , "")
+	call <SID>X("PmenuSel" 		, s:jblack      , s:red      	,"none")
+
+
+
 
 "/****************************************************************************************   
 "【 C Highlighting 】                                                                
@@ -415,10 +421,6 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 " ***************************************************************************************/    
 	call <SID>X("CCTreeHiSymbol" 	,"yellow"   ,"darkblue"   ,"bold")
 	call <SID>X("CCTreeHiMarkers" ,"yellow"   ,"darkblue"   ,"bold")
-
-
-
-
 
 " 未使用
 if 0
