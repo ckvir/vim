@@ -350,7 +350,8 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 " @ Define                                        ： 
 " @ Include                                       ： include
 " @ Ignore                                        ： 
-" @ PmenuSel                                      ： 跳出視窗（選中） 
+" @ PmenuSel                                      ： Pop Window（選中） 
+" @ TabLineSel                                    ： Tab 分頁選中顏色
 " ***************************************************************************************/    
   call <SID>X("Comment"     , s:comment     , ""          , "")
   call <SID>X("Todo"        , s:comment     , s:background, "")
@@ -372,10 +373,9 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("Include"     , s:jincludefg  , ""          , "")
   call <SID>X("Ignore"      , "666666"      , ""          , "")
 	call <SID>X("PmenuSel" 		, s:jblack      , s:red      	,"none")
-
-
-
-
+	call <SID>X("TabLineSel" 	, s:jblack      , s:blue      ,"none")
+	
+	
 "/****************************************************************************************   
 "【 C Highlighting 】                                                                
 " @ cType                                         ： int
@@ -409,11 +409,13 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   "call <SID>X("Marco"          , "FF0000"      , ""          , "")
   "call <SID>X("Error"          , "000000"      , ""          , "") 
 
+
 "/****************************************************************************************   
 "【 外掛 Highlighting 】                                                                
 " @ NERDTreeCWD
 " ***************************************************************************************/  
   call <SID>X("NERDTreeCWD" ,"969896"   ,""   ,"bold")
+  
   
 "/****************************************************************************************   
 "【 外掛 CCTree 】                                                                
@@ -422,23 +424,10 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	call <SID>X("CCTreeHiSymbol" 	,"yellow"   ,"darkblue"   ,"bold")
 	call <SID>X("CCTreeHiMarkers" ,"yellow"   ,"darkblue"   ,"bold")
 
-" 未使用
-if 0
-  " Diff Highlighting
-  call <SID>X("diffAdd", "", "4c4e39", "")
-  call <SID>X("diffDelete", s:background, s:red, "")
-  call <SID>X("diffChange", "", "2B5B77", "")
-  call <SID>X("diffText", s:line, s:blue, "")
 
-
-  " Git
-  call <SID>X("diffAdded", s:green, "", "")
-  call <SID>X("diffRemoved", s:red, "", "")
-  call <SID>X("gitcommitSummary", "", "", "bold")
-endif
-  
-  
-  " 刪除 Function
+"/****************************************************************************************   
+"【 刪除 Function 】                                                                
+" ***************************************************************************************/   
   delf <SID>X
   delf <SID>rgb
   delf <SID>colour
@@ -449,6 +438,25 @@ endif
   delf <SID>grey_level
   delf <SID>grey_number
 endif
-
 set background=dark
+
+
+"/****************************************************************************************   
+"【 未使用 】                                                                
+" ***************************************************************************************/ 
+if 0
+  " Diff Highlighting
+  call <SID>X("diffAdd", "", "4c4e39", "")
+  call <SID>X("diffDelete", s:background, s:red, "")
+  call <SID>X("diffChange", "", "2B5B77", "")
+  call <SID>X("diffText", s:line, s:blue, "")
+  " Git
+  call <SID>X("diffAdded", s:green, "", "")
+  call <SID>X("diffRemoved", s:red, "", "")
+  call <SID>X("gitcommitSummary", "", "", "bold")
+endif
+  
+  
+  
+
 
